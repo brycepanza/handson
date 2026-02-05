@@ -1,9 +1,3 @@
-def main():
-    print("Example testing")
-    print(f"{characteristic('2.351')} {mantissa('2.351')}")
-    print(f"{characteristic('0.0125')} {mantissa('0.0125')}")
-    print(f"{characteristic('-4.0')} {mantissa('-4.0')}")
-
 # utility attempt to convert character to number
 def atoi(char):
     unicode = ord(char)
@@ -104,6 +98,3 @@ def mantissa(num_string):
         denominator = 10 * denominator
 
     return (True, numerator, denominator)
-
-if __name__ == "__main__":
-    main()
