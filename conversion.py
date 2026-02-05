@@ -1,15 +1,18 @@
 def main():
-    print(characteristic("231.01"))
-    print(characteristic(".9999"))
-    print(characteristic("hello world"))
-    print(characteristic("-10000.0"))
-    print(characteristic("1022a.50"))
+    print("Example testing")
+    print(f"{characteristic('2.351')} {mantissa('2.351')}")
+    print(f"{characteristic('0.0125')} {mantissa('0.0125')}")
+    print(f"{characteristic('-4.0')} {mantissa('-4.0')}")
 
-    print("Mantissa")
-    print(mantissa("233"))
-    print(mantissa("23.233434")
-    print(mantissa("12.1a24"))
-    print(mantissa("00a.122"))
+# utility attempt to convert character to number
+def atoi(char):
+    unicode = ord(char)
+    if unicode not in range(ord('0'), ord('9')+1):
+        # pass error for not number
+        return None
+    # send number as integer
+    return unicode - ord('0')
+
 
 def characteristic(num_string):
     """
@@ -31,15 +34,6 @@ def characteristic(num_string):
     # variable for characteristic number
     num = 0
     
-    # attempt to convert character to number
-    def atoi(char):
-        unicode = ord(char)
-        if unicode not in range(ord('0'), ord('9')+1):
-            # pass error for not number
-            return None
-        # send number as integer
-        return unicode - ord('0')
-
     # iterate for characters in string
     for char in num_string:
         # check for reached decimal point
@@ -69,7 +63,47 @@ def mantissa(num_string):
     Returns:
         tuple: (bool, int, int) - (True, numerator, denominator) if valid, (False, 0, 0) if invalid
     """
-    pass
+
+    # decimal numerator over power of ten
+    numerator = 0
+    # decimal denominator power of ten 
+    denominator = 1
+
+    # function to send failed status to caller
+    def exit_with_fail():
+        return (False, 0, 0)
+
+    # check for negative value
+    if num_string[0] == '-':
+        # local assign absolute value
+        num_string = num_string[1:]
+
+    decimal_index = None
+    # iterate to pass integer section
+    for i in range(len(num_string)):
+        # check for end of integer 
+        if num_string[i] == '.':
+            decimal_index = i
+            break
+        # otherwise check for invalid input
+        if atoi(num_string[i]) == None:
+            return exit_with_fail()
+
+    # check for failed exit
+    if decimal_index == None:
+        return exit_with_fail()
+
+    # iterate to find fraction
+    for i in range(decimal_index + 1, len(num_string)):
+        digit = atoi(num_string[i])
+        # check for invalid input
+        if digit == None:
+            return exit_with_fail()
+        # update state
+        numerator = 10 * numerator + digit
+        denominator = 10 * denominator
+
+    return (True, numerator, denominator)
 
 if __name__ == "__main__":
     main()
