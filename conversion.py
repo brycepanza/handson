@@ -7,6 +7,10 @@ def atoi(char):
     # send number as integer
     return unicode - ord('0')
 
+# utility function for processing
+def check_string(string):
+    if string is None or string == "": return False
+    return True
 
 def characteristic(num_string):
     """
@@ -16,12 +20,16 @@ def characteristic(num_string):
         tuple: (bool, int) - (True, characteristic) if valid, (False, 0) if invalid
     """
 
+    # check input
+    if not check_string(num_string): return False
+    # condition
+    num_string = num_string.strip()
+
     sign = 1
     # check for sign of value
     if num_string[0] == '-':
         sign = -1
         num_string = num_string[1:]
-    # sign = -1 if num_string[0] == '-' else 1
 
     # state variable for valid status of input string
     is_valid = True
@@ -57,6 +65,12 @@ def mantissa(num_string):
     Returns:
         tuple: (bool, int, int) - (True, numerator, denominator) if valid, (False, 0, 0) if invalid
     """
+
+
+    # check input
+    if not check_string(num_string): return False
+    # condition
+    num_string = num_string.strip()
 
     # decimal numerator over power of ten
     numerator = 0
